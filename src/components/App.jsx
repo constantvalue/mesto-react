@@ -3,14 +3,28 @@ import { Main } from "./Main";
 import { Footer } from "./Footer";
 
 function App() {
+
+  function handleEditAvatarClick() {
+    document.querySelector(".popup-avatar").classList.add("popup_opened");
+  }
+
+  function handleEditProfileClick() {
+    document.querySelector(".popup-profile").classList.add("popup_opened");
+  }
+
+  function handleAddPlaceClick() {
+    document.querySelector(".popup-card").classList.add("popup_opened");
+  }
+
   return (
     <>
       <Header></Header>
 
-      <Main></Main>
+      <Main onClickAvatar = {handleEditAvatarClick}
+      onClickProfile = {handleEditProfileClick}
+      onClickPlace = {handleAddPlaceClick}/>
 
       <Footer></Footer>
-
 
       <div className="popup popup-profile">
         <form className="popup__form" name="profileForm" id="profileForm" noValidate="">
