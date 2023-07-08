@@ -1,4 +1,4 @@
-export function Main({onClickAvatar, onClickProfile, onClickPlace}) {
+export function Main({onEditProfile, onAddPlace, onEditAvatar}) {
 
 
 
@@ -8,13 +8,13 @@ export function Main({onClickAvatar, onClickProfile, onClickPlace}) {
         <div className="profile__info">
           <div className="profile__avatar-container">
             <img className="profile__avatar" src="#" alt="Аватар" />
-            <button className="profile__avatar-button" type="button" onClick={onClickAvatar}/>
+            <button className="profile__avatar-button" type="button" onClick={onEditAvatar}/>
           </div>
           <h2 className="profile__title"> </h2>
-          <button className="profile__edit-button" type="button" aria-label="Кнопка редактирования" onClick={onClickProfile} />
+          <button className="profile__edit-button" type="button" aria-label="Кнопка редактирования" onClick={onEditProfile} />
           <p className="profile__subtitle" />
         </div>
-        <button className="profile__add-button" type="button" aria-label="кнопка добавить" onClick={onClickPlace}/>
+        <button className="profile__add-button" type="button" aria-label="кнопка добавить" onClick={onAddPlace}/>
       </section>
       <section className="elements" aria-label="карточки">
         {/* тут у нас была разметка с карточками. Теперь мы получаем карточки
