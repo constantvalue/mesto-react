@@ -1,10 +1,16 @@
-export function ImagePopup({onClose}) {
+export function ImagePopup({ onClose, card }) {
   return (
-    <div className="popup popup-image">
+    //логическим оператором "И" проверяем выполнение условий. В обратном случае получаем false.
+    <div className={`popup popup-image ${card && "popup_opened"}`}>
       <div className="popup__image-box">
-        <img className="popup__image" alt="картинка" />
-        <h2 className="popup__image-heading"> </h2>
-        <button className="popup__close-button popup__close-button_position_image-popup" type="button" aria-label="кнопка закрыть окно" onClick={onClose}/>
+        <img src={card.link} className="popup__image" alt="картинка" />
+        <h2 className="popup__image-heading">{card.name}</h2>
+        <button
+          className="popup__close-button popup__close-button_position_image-popup"
+          type="button"
+          aria-label="кнопка закрыть окно"
+          onClick={onClose}
+        />
       </div>
     </div>
   );
