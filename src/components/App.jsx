@@ -22,6 +22,13 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   }
 
+  //эта функция
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+  }
+
   return (
     <>
       <Header></Header>
@@ -36,6 +43,7 @@ function App() {
         title={"Редактировать профaиль"}
         buttonText={"Сохранить"}
         isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
       >
         <div className="popup__input-container">
           <input
@@ -69,6 +77,7 @@ function App() {
         title={"Новое место"}
         buttonText={"Создать"}
         isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
       >
         <div className="popup__input-container">
           <input
@@ -100,6 +109,7 @@ function App() {
         title={"Обновить аватар"}
         buttonText={"Сохранить"}
         isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
       >
         <div className="popup__input-container">
           <input
@@ -118,6 +128,7 @@ function App() {
         name={"popup-delete"}
         title={"Вы уверены?"}
         buttonText={"Да"}
+        onClose={closeAllPopups}
       />
       <ImagePopup></ImagePopup>
       <div className="popup popup-profile">

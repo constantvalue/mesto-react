@@ -1,4 +1,4 @@
-export function PopupWithForm({ title, name, buttonText, children, isOpen }) {
+export function PopupWithForm({ title, name, buttonText, children, isOpen, onClose }) {
   return (
     <div className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}>
       <form className="popup__form" name={name} id="profileForm" noValidate="">
@@ -7,7 +7,7 @@ export function PopupWithForm({ title, name, buttonText, children, isOpen }) {
         <button className="popup__submit-button" type="submit" aria-label="кнопка сохранить">
           {buttonText}
         </button>
-        <button className="popup__close-button" type="button" aria-label="кнопка закрыть окно" />
+        <button className="popup__close-button" type="button" aria-label="кнопка закрыть окно" onClick={onClose} />
       </form>
     </div>
   );
