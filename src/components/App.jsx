@@ -1,9 +1,9 @@
 import { Header } from "./Header";
 import { Main } from "./Main";
 import { Footer } from "./Footer";
+import { PopupWithForm } from "./PopupWithForm";
 
 function App() {
-
   function handleEditAvatarClick() {
     document.querySelector(".popup-avatar").classList.add("popup_opened");
   }
@@ -19,13 +19,12 @@ function App() {
   return (
     <>
       <Header></Header>
-
-      <Main onClickAvatar = {handleEditAvatarClick}
-      onClickProfile = {handleEditProfileClick}
-      onClickPlace = {handleAddPlaceClick}/>
-
+      <Main onClickAvatar={handleEditAvatarClick} onClickProfile={handleEditProfileClick} onClickPlace={handleAddPlaceClick} />
       <Footer></Footer>
-
+      <PopupWithForm name={"popup-profile"} title={"Редактировать профaиль"} buttonText={"Сохранить"} />
+      <PopupWithForm name={"popup-card"} title={"Новое место"} buttonText={"Создать"} />
+      <PopupWithForm name={"popup-avatar"} title={"Обновить аватар"} buttonText={"Сохранить"} />
+      <PopupWithForm name={"popup-delete"} title={"Вы уверены?"} buttonText={"Да"} />
       <div className="popup popup-profile">
         <form className="popup__form" name="profileForm" id="profileForm" noValidate="">
           <h2 className="popup__heading">Редактировать профиль</h2>
@@ -68,7 +67,7 @@ function App() {
           <button className="popup__close-button popup__close-button_position_image-popup" type="button" aria-label="кнопка закрыть окно" />
         </div>
       </div>
-      {/* попап удаления карточки с подтверждением */}
+      попап удаления карточки с подтверждением
       <div className="popup popup-delete">
         <form className="popup__form" name="popupDeleteForm" id="popupDeleteForm" noValidate="">
           <h2 className="popup__heading popup__heading_place_delete">Вы уверены?</h2>
@@ -91,7 +90,7 @@ function App() {
           </button>
           <button className="popup__close-button" type="button" aria-label="кнопка закрыть окно" />
         </form>
-      </div>
+      </div>{" "}
     </>
   );
 }
