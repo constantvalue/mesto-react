@@ -26,12 +26,6 @@ export function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
     //без этого будут бесконечные запросы.
   }, []);
 
-  // пробросили хэндлер клика по карточке через пропсы компонентов  Main -> Card
-  const initialCards = cards.map((items) => {
-    // Для каждого элемента (для каждой карточки) запишем ключ. Значением ключа будет являться уникальный id каждой карточки.
-    return <Card onCardClick={onCardClick} key={items._id} card={items}></Card>;
-  });
-
   return (
     <main className="main">
       <section className="profile">
@@ -64,7 +58,11 @@ export function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
         />
       </section>
       <section className="elements" aria-label="карточки">
-        {initialCards}
+        {cards.map((items) => {
+          return (
+            <Card onCardClick={onCardClick} key={items._id} card={items}></Card>
+          );
+        })}
       </section>
     </main>
   );
