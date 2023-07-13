@@ -1,15 +1,19 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export function Card({ card, onCardClick }) {
+export function Card({ card, onCardClick, onCardLike }) {
   const userContext = useContext(CurrentUserContext);
   const handleClick = () => {
     onCardClick(card);
   };
 
+  const handleLikeClick = () => {
+    onCardLike(card);
+  }
+
   // Определяем, являемся ли мы владельцем текущей карточки
   const isOwn = card.owner._id === userContext._id;
-// Создаём переменную, которую после зададим в `className` для кнопки мусорки
+  // Создаём переменную, которую после зададим в `className` для кнопки мусорки
   const cardTrashButtonClassName = `element__trash-button ${
     isOwn && "element___trash-button_visibility_visible"
   }`;
@@ -45,6 +49,7 @@ export function Card({ card, onCardClick }) {
             className={cardLikeButtonClassName}
             type="button"
             aria-label="кнопка лайк"
+            onClick={handleLikeClick}
           />
           <span className="element__like-button-counter">
             {/* в брифе не сказано сделать, но я все же подставил длину масива лайков в качестве значения каунтера */}

@@ -1,32 +1,17 @@
 import { Card } from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { useContext, useEffect, useState } from "react";
-import { api } from "../utils/Api";
+import { useContext } from "react";
+// import { api } from "../utils/Api";
 
-export function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
+export function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  onCardClick,
+  onCardLike,
+  cards,
+}) {
   const userContext = useContext(CurrentUserContext);
-
-  const [cards, setCards] = useState([]);
-
-  //используем хук для запроса данных.
-  useEffect(() => {
-    //этот код выполнится при монтировании компонента.
-    Promise.all([api.getUserData(), api.getInitialCards()])
-      .then((res) => {
-        const [userData, cardData] = res;
-
-
-        cardData.forEach ((item) => {
-          item.myId = userData._id;
-        })
-        setCards(cardData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    //передаем пустой массив зависимостей
-    //без этого будут бесконечные запросы.
-  }, []);
 
   return (
     <main className="main">
@@ -66,7 +51,12 @@ export function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
       <section className="elements" aria-label="карточки">
         {cards.map((items) => {
           return (
-            <Card onCardClick={onCardClick} key={items._id} card={items}></Card>
+            <Card
+              onCardClick={onCardClick}
+              key={items._id}
+              card={items}
+              onCardLike={onCardLike}
+            ></Card>
           );
         })}
       </section>

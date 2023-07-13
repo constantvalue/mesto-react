@@ -3,7 +3,7 @@ import { Main } from "./Main";
 import { Footer } from "./Footer";
 import { PopupWithForm } from "./PopupWithForm";
 import { ImagePopup } from "./ImagePopup";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { api } from "../utils/Api";
 
@@ -14,7 +14,9 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
+  // const userContext = useContext(CurrentUserContext);
 
   //используем хук для запроса данных.
   useEffect(() => {
@@ -30,6 +32,27 @@ function App() {
     //передаем пустой массив зависимостей
     //без этого будут бесконечные запросы.
   }, []);
+
+
+    //используем хук для запроса данных.
+    useEffect(() => {
+      //этот код выполнится при монтировании компонента.
+      Promise.all([api.getUserData(), api.getInitialCards()])
+        .then((res) => {
+          const [userData, cardData] = res;
+
+
+          cardData.forEach ((item) => {
+            item.myId = userData._id;
+          })
+          setCards(cardData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      //передаем пустой массив зависимостей
+      //без этого будут бесконечные запросы.
+    }, []);
 
 
   function handleCardClick(card) {
@@ -56,6 +79,17 @@ function App() {
     setSelectedCard(null);
   }
 
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card, isLiked).then((newCard) => {
+        setCards((state) => state.map((c) => c === card ? newCard : c));
+    });
+}
+
   return (
     <>
     <CurrentUserContext.Provider value={currentUser}>
@@ -66,6 +100,8 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         // пробросили хэндлер клика по карточке через пропсы компонентов  Main -> Card
         onCardClick={handleCardClick}
+        onCardLike={handleCardLike}
+        cards={cards}
       />
       <Footer></Footer>
       <PopupWithForm
