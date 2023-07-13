@@ -3,13 +3,34 @@ import { Main } from "./Main";
 import { Footer } from "./Footer";
 import { PopupWithForm } from "./PopupWithForm";
 import { ImagePopup } from "./ImagePopup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { api } from "../utils/Api";
+
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+
+
+  //используем хук для запроса данных.
+  useEffect(() => {
+    //этот код выполнится при монтировании компонента.
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then((res) => {
+        const [userData, cardData] = res;
+        setCurrentUser(userData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //передаем пустой массив зависимостей
+    //без этого будут бесконечные запросы.
+  }, []);
+
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -37,6 +58,7 @@ function App() {
 
   return (
     <>
+    <CurrentUserContext.Provider value={currentUser}>
       <Header></Header>
       <Main
         onEditProfile={handleEditProfileClick}
@@ -134,6 +156,7 @@ function App() {
       </PopupWithForm>
 
       <ImagePopup onClose={closeAllPopups} card={selectedCard}></ImagePopup>
+      </CurrentUserContext.Provider>
     </>
   );
 }
