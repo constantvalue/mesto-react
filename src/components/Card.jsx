@@ -9,11 +9,11 @@ export function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
   const handleLikeClick = () => {
     onCardLike(card);
-  }
+  };
 
   const handleDeleteClick = () => {
     onCardDelete(card);
-  }
+  };
 
   // Определяем, являемся ли мы владельцем текущей карточки
   const isOwn = card.owner._id === userContext._id;
@@ -57,7 +57,6 @@ export function Card({ card, onCardClick, onCardLike, onCardDelete }) {
             onClick={handleLikeClick}
           />
           <span className="element__like-button-counter">
-            {/* в брифе не сказано сделать, но я все же подставил длину масива лайков в качестве значения каунтера */}
             {card.likes.length}
           </span>
         </div>
