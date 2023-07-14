@@ -26,13 +26,13 @@ class Api {
     );
   }
 
-  userInfoPatch(data) {
+  userInfoPatch(name, about) {
     return fetch(this._baseUrl + "/users/me", {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({
-        name: data.name,
-        about: data.job,
+        name,
+        about,
       }),
     }).then(this._returnResponse);
   }
@@ -65,16 +65,14 @@ class Api {
     }).then(this._returnResponse);
   }
 
-
-  changeLikeCardStatus(card, status){
-    console.log(card)
+  changeLikeCardStatus(card, status) {
+    console.log(card);
     return fetch(this._baseUrl + "/cards/" + card._id + "/likes", {
       headers: this._headers,
       //избегаем использование if else.
       method: status ? "DELETE" : "PUT",
     }).then(this._returnResponse);
   }
-
 
   // likeCard(card) {
   //   return fetch(this._baseUrl + "/cards/" + card._cardId + "/likes", {
@@ -89,9 +87,7 @@ class Api {
   //     method: "DELETE",
   //   }).then(this._returnResponse);
   // }
-
 }
-
 
 //Экспортируем именно экземпляр, а не весь класс. Экспорт у класса убрал.
 export const api = new Api({

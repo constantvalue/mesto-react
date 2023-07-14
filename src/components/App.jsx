@@ -6,6 +6,7 @@ import { ImagePopup } from "./ImagePopup";
 import { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { api } from "../utils/Api";
+import { EditProfilePopup } from "./EditProfilePopup"
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -92,6 +93,14 @@ function App() {
     });
   }
 
+  function handleUpdateUser ({name, about})  {
+    api.userInfoPatch(name, about).then((res) => {
+      setCurrentUser({name: res.name, about: res.about})
+    })
+    closeAllPopups()
+  }
+
+
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
@@ -107,40 +116,11 @@ function App() {
           onCardDelete={handleCardDelete}
         />
         <Footer></Footer>
-        <PopupWithForm
-          name={"popup-profile"}
-          title={"Редактировать профиль"}
-          buttonText={"Сохранить"}
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <div className="popup__input-container">
-            <input
-              className="popup__input"
-              type="text"
-              id="popup-profile-input-name"
-              name="name"
-              minLength={2}
-              maxLength={40}
-              required=""
-              placeholder="Имя"
-            />
-            <span className="popup-profile-input-name-error" />
-          </div>
-          <div className="popup__input-container">
-            <input
-              className="popup__input"
-              type="text"
-              id="popup-profile-input-job"
-              name="job"
-              minLength={2}
-              maxLength={200}
-              required=""
-              placeholder="Должность"
-            />
-            <span className="popup-profile-input-job-error" />
-          </div>
-        </PopupWithForm>
+          onUpdateUser={handleUpdateUser}
+        />
         <PopupWithForm
           name={"popup-card"}
           title={"Новое место"}
