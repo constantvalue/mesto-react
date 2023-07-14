@@ -65,6 +65,7 @@ class Api {
     }).then(this._returnResponse);
   }
 
+  //с помощью тернарного оператора, объединили два метода в один.
   changeLikeCardStatus(card, status) {
     console.log(card);
     return fetch(this._baseUrl + "/cards/" + card._id + "/likes", {
@@ -73,20 +74,6 @@ class Api {
       method: status ? "DELETE" : "PUT",
     }).then(this._returnResponse);
   }
-
-  // likeCard(card) {
-  //   return fetch(this._baseUrl + "/cards/" + card._cardId + "/likes", {
-  //     headers: this._headers,
-  //     method: "PUT",
-  //   }).then(this._returnResponse);
-  // }
-
-  // deleteLike(card) {
-  //   return fetch(this._baseUrl + "/cards/" + card._cardId + "/likes", {
-  //     headers: this._headers,
-  //     method: "DELETE",
-  //   }).then(this._returnResponse);
-  // }
 }
 
 //Экспортируем именно экземпляр, а не весь класс. Экспорт у класса убрал.

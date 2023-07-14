@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 
 export function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [name, setName] = useState();
-  const [description, setDescription] = useState();
+  const [about, setDescription] = useState();
 
   const userContext = useContext(CurrentUserContext);
 
@@ -20,7 +20,7 @@ export function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     // Передаём значения управляемых компонентов во внешний обработчик
     onUpdateUser({
       name,
-      about: description,
+      about,
     });
   }
 
@@ -32,16 +32,14 @@ export function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     setDescription(e.target.value);
   }
 
-
   return (
     <PopupWithForm
+      onSubmit={handleSubmit}
       name={"popup-profile"}
       title={"Редактировать профиль"}
       buttonText={"Сохранить"}
-
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={handleSubmit}
     >
       <div className="popup__input-container">
         <input
@@ -53,7 +51,8 @@ export function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           maxLength={40}
           required=""
           placeholder="Имя"
-          value={name}
+          //решение было найдено здесь https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
+          value={name || ""}
           onChange={handleNameChange}
         />
         <span className="popup-profile-input-name-error" />
@@ -68,7 +67,8 @@ export function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           maxLength={200}
           required=""
           placeholder="Должность"
-          value={description}
+          //решение было найдено здесь https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
+          value={about || ""}
           onChange={handleDescriptionChange}
         />
         <span className="popup-profile-input-job-error" />

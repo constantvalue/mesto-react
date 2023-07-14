@@ -6,6 +6,17 @@ export function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
   const [name, setName] = useState();
   const [link, setLink] = useState();
 
+  function handleSubmit(e) {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+
+    // Передаём значения управляемых компонентов во внешний обработчик
+    onAddPlace({
+      name,
+      link,
+    });
+  }
+
   function handleNameChange(e) {
     setName(e.target.value);
   }
@@ -13,18 +24,6 @@ export function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
   function handleLinkChange(e) {
     setLink(e.target.value);
   }
-
-  function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
-    e.preventDefault();
-
-    // Передаём значения управляемых компонентов во внешний обработчик
-    onAddPlace({
-      name: name,
-      link: link,
-    });
-  }
-
   return (
     <PopupWithForm
       name={"popup-card"}
@@ -45,7 +44,8 @@ export function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
           minLength={2}
           maxLength={30}
           required=""
-          value={name}
+          //решение было найдено здесь https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
+          value={name || ""}
         />
         <span className="popup-card-title-text-error" />
       </div>
@@ -58,7 +58,8 @@ export function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
           name="link"
           placeholder="Ссылка на картинку"
           required=""
-          value={link}
+          //решение было найдено здесь https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
+          value={link || ""}
         />
         <span className="popup-card-link-value-error" />
       </div>
