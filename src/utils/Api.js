@@ -26,13 +26,13 @@ class Api {
     );
   }
 
-  userInfoPatch(name, about) {
+  userInfoPatch(data) {
     return fetch(this._baseUrl + "/users/me", {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({
-        name,
-        about,
+        name: data.name,
+        about: data.about,
       }),
     }).then(this._returnResponse);
   }

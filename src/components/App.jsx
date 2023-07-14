@@ -3,10 +3,11 @@ import { Main } from "./Main";
 import { Footer } from "./Footer";
 import { PopupWithForm } from "./PopupWithForm";
 import { ImagePopup } from "./ImagePopup";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { api } from "../utils/Api";
-import { EditProfilePopup } from "./EditProfilePopup"
+import { EditProfilePopup } from "./EditProfilePopup";
+import { EditAvatarPopup } from "./EditAvatarPopup";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -21,10 +22,10 @@ function App() {
   //используем хук для запроса данных.
   useEffect(() => {
     //этот код выполнится при монтировании компонента.
-    Promise.all([api.getUserData(), api.getInitialCards()])
+    api
+      .getUserData()
       .then((res) => {
-        const [userData, cardData] = res;
-        setCurrentUser(userData);
+        setCurrentUser(res);
       })
       .catch((error) => {
         console.log(error);
@@ -36,14 +37,13 @@ function App() {
   //используем хук для запроса данных.
   useEffect(() => {
     //этот код выполнится при монтировании компонента.
-    Promise.all([api.getUserData(), api.getInitialCards()])
+    api
+      .getInitialCards()
       .then((res) => {
-        const [userData, cardData] = res;
-
-        cardData.forEach((item) => {
-          item.myId = userData._id;
-        });
-        setCards(cardData);
+        // cardData.forEach((item) => {
+        //   item.myId = userData._id;
+        // });
+        setCards(res);
       })
       .catch((error) => {
         console.log(error);
@@ -93,13 +93,19 @@ function App() {
     });
   }
 
-  function handleUpdateUser ({name, about})  {
-    api.userInfoPatch(name, about).then((res) => {
-      setCurrentUser({name: res.name, about: res.about})
-    })
-    closeAllPopups()
+  function handleUpdateUser(data) {
+    api.userInfoPatch(data).then((res) => {
+      setCurrentUser(res);
+    });
+    closeAllPopups();
   }
 
+  function handleUpdateAvatar(data) {
+    api.updateAvatar(data).then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    });
+  }
 
   return (
     <>
@@ -153,26 +159,11 @@ function App() {
             <span className="popup-card-link-value-error" />
           </div>
         </PopupWithForm>
-        <PopupWithForm
-          name={"popup-avatar"}
-          title={"Обновить аватар"}
-          buttonText={"Сохранить"}
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-        >
-          <div className="popup__input-container">
-            <input
-              className="popup__input"
-              type="url"
-              id="popup-avatar-input-name"
-              name="avatar"
-              minLength={2}
-              required=""
-              placeholder="Ссылка на картинку"
-            />
-            <span className="popup-avatar-input-name-error" />
-          </div>
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        />
 
         <ImagePopup onClose={closeAllPopups} card={selectedCard}></ImagePopup>
       </CurrentUserContext.Provider>
