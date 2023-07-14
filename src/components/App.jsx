@@ -79,37 +79,61 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card, isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c === card ? newCard : c)));
-    });
+    api
+      .changeLikeCardStatus(card, isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => (c === card ? newCard : c)));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   function handleCardDelete(card) {
-    api.cardDelete(card).then(() => {
-      setCards((state) => state.filter((c) => c !== card));
-      console.log(card);
-    });
+    api
+      .cardDelete(card)
+      .then(() => {
+        setCards((state) => state.filter((c) => c !== card));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   function handleUpdateUser(data) {
-    api.userInfoPatch(data).then((res) => {
-      setCurrentUser(res);
-    });
-    closeAllPopups();
+    api
+      .userInfoPatch(data)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   function handleUpdateAvatar(data) {
-    api.updateAvatar(data).then((res) => {
-      setCurrentUser(res);
-    });
-    closeAllPopups();
+    api
+      .updateAvatar(data)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   function handleAddPlace(data) {
-    api.addCardOnServer(data).then((res) => {
-      setCards([res, ...cards]);
-    });
-    closeAllPopups();
+    api
+      .addCardOnServer(data)
+      .then((res) => {
+        setCards([res, ...cards]);
+        closeAllPopups();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (

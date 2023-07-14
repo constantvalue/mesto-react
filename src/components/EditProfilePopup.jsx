@@ -3,15 +3,15 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useContext, useEffect, useState } from "react";
 
 export function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
-  const [name, setName] = useState();
-  const [about, setDescription] = useState();
+  const [name, setName] = useState("");
+  const [about, setDescription] = useState("");
 
   const userContext = useContext(CurrentUserContext);
 
   useEffect(() => {
     setName(userContext.name);
     setDescription(userContext.about);
-  }, [userContext]);
+  }, [isOpen, userContext]);
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -49,7 +49,7 @@ export function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           name="name"
           minLength={2}
           maxLength={40}
-          required=""
+          required
           placeholder="Имя"
           //решение было найдено здесь https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
           value={name || ""}
@@ -65,7 +65,7 @@ export function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           name="job"
           minLength={2}
           maxLength={200}
-          required=""
+          required
           placeholder="Должность"
           //решение было найдено здесь https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
           value={about || ""}

@@ -32,7 +32,7 @@ export function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
           id="popup-avatar-input-name"
           name="avatar"
           minLength={2}
-          required=""
+          required
           placeholder="Ссылка на картинку"
         />
         <span className="popup-avatar-input-name-error" />

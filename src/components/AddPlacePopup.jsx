@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PopupWithForm } from "./PopupWithForm";
 
 //этот компонент делаем по аналогии с editProfilePopup
 export function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
-  const [name, setName] = useState();
-  const [link, setLink] = useState();
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -24,6 +24,13 @@ export function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
   function handleLinkChange(e) {
     setLink(e.target.value);
   }
+
+  //хук для очистки полей ввода при открытии попапа создания карточки.
+  useEffect(() => {
+    setName("");
+    setLink("");
+  }, [isOpen]);
+
   return (
     <PopupWithForm
       name={"popup-card"}
@@ -43,9 +50,8 @@ export function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
           placeholder="Название"
           minLength={2}
           maxLength={30}
-          required=""
-          //решение было найдено здесь https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
-          value={name || ""}
+          required
+          value={name}
         />
         <span className="popup-card-title-text-error" />
       </div>
@@ -57,9 +63,8 @@ export function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
           id="popup-card-link-value"
           name="link"
           placeholder="Ссылка на картинку"
-          required=""
-          //решение было найдено здесь https://stackoverflow.com/questions/47012169/a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
-          value={link || ""}
+          value={link}
+          required
         />
         <span className="popup-card-link-value-error" />
       </div>

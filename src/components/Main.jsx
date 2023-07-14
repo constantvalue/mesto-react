@@ -50,12 +50,12 @@ export function Main({
         />
       </section>
       <section className="elements" aria-label="карточки">
-        {cards.map((items) => {
+        {cards.map((card) => {
           return (
             <Card
               onCardClick={onCardClick}
-              key={items._id}
-              card={items}
+              key={card._id}
+              card={card}
               onCardLike={onCardLike}
               onCardDelete={onCardDelete}
             ></Card>

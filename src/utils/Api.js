@@ -67,7 +67,6 @@ class Api {
 
   //с помощью тернарного оператора, объединили два метода в один.
   changeLikeCardStatus(card, status) {
-    console.log(card);
     return fetch(this._baseUrl + "/cards/" + card._id + "/likes", {
       headers: this._headers,
       //избегаем использование if else.
