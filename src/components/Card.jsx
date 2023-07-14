@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export function Card({ card, onCardClick, onCardLike }) {
+export function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const userContext = useContext(CurrentUserContext);
   const handleClick = () => {
     onCardClick(card);
@@ -9,6 +9,10 @@ export function Card({ card, onCardClick, onCardLike }) {
 
   const handleLikeClick = () => {
     onCardLike(card);
+  }
+
+  const handleDeleteClick = () => {
+    onCardDelete(card);
   }
 
   // Определяем, являемся ли мы владельцем текущей карточки
@@ -38,6 +42,7 @@ export function Card({ card, onCardClick, onCardLike }) {
         className={cardTrashButtonClassName}
         type="button"
         aria-label="кнопка мусорка"
+        onClick={handleDeleteClick}
       />
 
       <div className="element__whitebox">

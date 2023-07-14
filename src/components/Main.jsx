@@ -10,6 +10,7 @@ export function Main({
   onCardClick,
   onCardLike,
   cards,
+  onCardDelete
 }) {
   const userContext = useContext(CurrentUserContext);
 
@@ -56,6 +57,7 @@ export function Main({
               key={items._id}
               card={items}
               onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
             ></Card>
           );
         })}

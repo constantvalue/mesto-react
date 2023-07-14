@@ -59,7 +59,7 @@ class Api {
   }
 
   cardDelete(card) {
-    return fetch(this._baseUrl + "/cards/" + card._cardId, {
+    return fetch(this._baseUrl + "/cards/" + card._id, {
       headers: this._headers,
       method: "DELETE",
     }).then(this._returnResponse);
@@ -70,6 +70,7 @@ class Api {
     console.log(card)
     return fetch(this._baseUrl + "/cards/" + card._id + "/likes", {
       headers: this._headers,
+      //избегаем использование if else.
       method: status ? "DELETE" : "PUT",
     }).then(this._returnResponse);
   }

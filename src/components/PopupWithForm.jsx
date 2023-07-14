@@ -5,11 +5,12 @@ export function PopupWithForm({
   children,
   isOpen,
   onClose,
+  onSubmit
 }) {
   return (
     //логическим оператором "И" проверяем выполнение условий. В обратном случае получаем false.
     <div className={`popup ${name} ${isOpen && "popup_opened"}`}>
-      <form className="popup__form" name={name} id="profileForm" noValidate="">
+      <form className="popup__form" onSubmit={onSubmit} name={name} id="profileForm" noValidate="">
         <h2 className="popup__heading">{title}</h2>
         {children}
         <button
